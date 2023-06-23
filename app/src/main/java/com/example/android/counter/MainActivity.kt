@@ -1,25 +1,21 @@
 package com.example.android.counter
 
-import android.graphics.Paint.Align
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
-
-
 import androidx.compose.foundation.layout.Row
-
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,7 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.android.counter.ui.theme.CounterTheme
@@ -54,31 +50,28 @@ class MainActivity : ComponentActivity() {
 fun Counter(modifier: Modifier = Modifier) {
 
     var textFieldState by remember {
-        mutableStateOf("0")
+        mutableStateOf(0)
     }
 
-    var numberInputed = textFieldState.toInt()
-
-        Row (modifier = modifier.padding(8.dp),
+    Row (modifier = modifier.padding(8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center){
             Button(modifier = Modifier
                 .weight(0.1F)
                 .height(48.dp),
                 onClick = {
-                    numberInputed -= 1
+                    if (textFieldState > 0) textFieldState -= 1
                 }) {
                 Text(text = "-")
             }
 
-            TextField(value = textFieldState,
+            TextField(value = textFieldState.toString(),
                 onValueChange = {
-                    textFieldState = it
+                    textFieldState.toString()
                 }, modifier = Modifier
                     .weight(0.1F)
-                    .padding(horizontal = 24.dp)
-
-
+                    .padding(horizontal = 24.dp),
+                colors = TextFieldDefaults.textFieldColors(Color.Blue)
             )
 
 
@@ -86,7 +79,7 @@ fun Counter(modifier: Modifier = Modifier) {
                 .weight(0.1F)
                 .height(48.dp),
                 onClick = {
-                numberInputed += 1
+                textFieldState += 1
             }) {
                 Text(text = "+")
             }
